@@ -88,7 +88,11 @@ pub fn part_two(){
     for i in file_lines{
       
 
-        let line = i.unwrap().split(":");
+        let line = match i {
+            Err(why) => panic!("bruh {}",why), 
+            Ok(line) => line,
+        };
+        let line = line.split(":");
         // get 2nd element of iterator
         let line = line.skip(1).next().unwrap();
         // println!("{}",line); 
