@@ -45,7 +45,7 @@ fn parse_card(card_str : String) -> usize{
 
 pub fn part_one(){
 
-    let file_path = "/home/thrypuro/Desktop/projects/advent-of-code-2023/inputs/day4.txt";
+    let file_path = "/home/thrypuro/Desktop/projects/advent-of-code/aoc-2023/inputs/day4.txt";
 
     let file_lines = read_lines(file_path);
     
@@ -75,7 +75,7 @@ pub fn part_one(){
 
 
 pub fn part_two(){
-   let file_path = "/home/thrypuro/Desktop/projects/advent-of-code-2023/inputs/day4.txt";
+   let file_path = "/home/thrypuro/Desktop/projects/advent-of-code/aoc-2023/inputs/day4.txt";
 
 //    let file_path = "/home/thrypuro/Desktop/projects/advent-of-code-2023/inputs/tests/test_day4.txt";
     let file_lines = read_lines(file_path);
