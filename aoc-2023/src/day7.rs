@@ -49,8 +49,10 @@ fn find_matches(st : &str) -> (i64,i64){
         else{
             ca.insert(key,1);
         }
-        if ca[&key] > max{
-            max = ca[&key];
+    }
+    for i in ca{
+        if i.1 > max{
+            max = i.1;
         }
     }
 
