@@ -28,8 +28,8 @@ fn main() {
 
     // day7::solve();
     
-    day8::solve();
+    // day8::solve();
 
-    // day9::solve();
+    day9::solve();
 
 }
