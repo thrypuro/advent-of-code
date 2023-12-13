@@ -17,12 +17,13 @@ fn read_lines(file_path : &str) -> Vec<String>{
        return v;
    }
 
-fn compute_sequence(line : String) -> i64 {
+fn compute_sequence(line : &String, part2 : bool) -> i64 {
 
     let l = line.split_whitespace()
     .map( | x | x.parse::<i64>().unwrap())
     .collect::<Vec<i64>>();
-let mut last : Vec<i64> = Vec::new();
+    let mut last : Vec<i64> = Vec::new();
+    let mut first : Vec<i64> = Vec::new();
 
     let mut v: Vec<Vec<i64>> = Vec::new();
     v.push(l);
@@ -35,6 +36,7 @@ let mut last : Vec<i64> = Vec::new();
         let last_seq = &v[v.len()-1];
         let mut a : Vec<i64> = Vec::new();
         let ba = last_seq[last_seq.len()-1];
+        let da = last_seq[0];
         for i in 0..last_seq.len()-1{
             let d = last_seq[i+1]-last_seq[i];
             a.push(d);
@@ -42,29 +44,41 @@ let mut last : Vec<i64> = Vec::new();
         }
         v.push(a);
         last.push(ba);
+        first.push(da);
+
         if s{
             break;
         }
 
     }
     let sa = last.iter().sum::<i64>();
-    sa
+    // subtract the first[0] from the rest of the firsts
+    let first_sum = 2*first[0] - first.iter().sum::<i64>();
+    if part2 {
+        return first_sum;
+    }
+    return sa;
 }
 
 
 pub fn solve(){ 
-    let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/day9.txt";
-    // let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/tests/test_day9.txt";
+    // let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/day9.txt";
+    let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/tests/test_day9.txt";
     let lines = read_lines(file_path);
 
     let mut s : i64 = 0;
 
-    for i in lines{
+    for i in &lines{
         
-        s+=compute_sequence(i);
+        s+=compute_sequence(i,false);
 
     }
 
     println!("Part 1 Solution : {}",s);
+    s = 0;
+    for i in lines{
+        
+        s+=compute_sequence(&i,true);
 
+    }
 }
