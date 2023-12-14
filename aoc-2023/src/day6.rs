@@ -1,21 +1,4 @@
-use std::fs::File;
-use std::io:: {BufReader,BufRead};
-use std::path::Path;
-
-fn read_lines(file_path : &str) -> Vec<String>{
-    let file = match File::open(Path::new(file_path)){
-           Err(why) => panic!("Couldnt open file {}: {}", file_path,why),
-           Ok(file) => file,
-       };
-       
-       let mut v : Vec<String> = Vec::new();
-       for i in BufReader::new(file).lines(){
-        let line = i.unwrap();
-            v.push(line)
-       }
-
-       return v;
-   }
+use super::util::read_lines;
 
 fn find_bounds(d : i64, t : i64) -> i64{
     let f = | x : i64|{
@@ -46,14 +29,10 @@ pub fn solve(){
     .split_whitespace().map(|x| x.parse::<i64>().unwrap()).collect::<Vec<i64>>();
     let distance = lines[1].split_once(": ").unwrap().1
     .split_whitespace().map(|x| x.parse::<i64>().unwrap()).collect::<Vec<i64>>();
-    let mut total : i64 = 1;
-
+    
     // zip time and distance as a tuple
-    let zipped = time.iter().zip(distance.iter());
-    for i in zipped{
-        let (t,d) = i;
-        total *=find_bounds(*d,*t);
-    }
+    let total = time.iter().zip(distance.iter())
+    .fold(1, |acc,y|  acc*find_bounds(*y.1,*y.0));
     println!("Part 1 solution : {}",total);
 
     let time2 = lines[0].split_once(": ").unwrap().1.split_whitespace()

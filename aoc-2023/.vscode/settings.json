@@ -2,5 +2,8 @@
     "rust-analyzer.linkedProjects": [
         "./Cargo.toml",
         "./Cargo.toml"
-    ]
+    ],
+    "editor.fontSize": 20,
+    "editor.fontFamily": "Agave Nerd font propo",
+    "editor.fontLigatures": false
 }
