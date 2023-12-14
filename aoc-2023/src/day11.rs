@@ -46,38 +46,33 @@ pub fn solve(){
     for &i in &extra_rows {
     for (j, &(x, _)) in galaxy.iter().enumerate() {
         if x > i {
+            // replace with 1 for part 1
             new_galaxy_col[j] += 1000000-1;
         }
         }
     }
-    galaxy.iter_mut().zip(new_galaxy_col.iter())
-    .for_each(|(x,y)| x.0 += y);
-
-
     let mut new_galaxy_row = vec![0; galaxy.len()];
     for &j in &extra_cols {
         for (i, &(_, y)) in galaxy.iter().enumerate() {
             if y > j {
+            // replace with 1 for part 1 i.e.+=1
             new_galaxy_row[i] += 1000000-1;
          }
         }
     }
-
-    galaxy.iter_mut().zip(new_galaxy_row.iter())
-    .for_each(|(x,y)| x.1 += y);
+    galaxy.iter_mut().zip(new_galaxy_col.iter().zip(new_galaxy_row.iter()))
+    .for_each(|(x,y)| {x.0 += y.0; x.1 += y.1});
 
     let mut total = 0;
 
-    for i in galaxy.iter(){
-        for j in galaxy.iter(){
-            if i != j {
-                total += manhattan_distance(*i,*j);
-            }
+    for i in 0..galaxy.len(){
+        for j in i+1..galaxy.len(){
+            let a = galaxy[i];
+            let b = galaxy[j];
+            total += manhattan_distance(a,b);
         }
         
     }
-
-    println!("Total: {}", total/2);
-
+    println!("Total: {}", total);
     
 }
