@@ -1,4 +1,3 @@
-
 use std::collections::HashMap;
 use super::util::read_lines;
 
@@ -88,6 +87,7 @@ fn solve_line(line : String) -> i32{
 fn recursive( vec_copy: &Vec<u8>,cons : &Vec<usize> ,i : usize ,g_i : usize,c_i : usize,
 map : &mut HashMap<(usize,usize,usize),i64>
 ) -> i64 {
+    
     if map.contains_key(&(i,g_i,c_i)){
         return map[&(i,g_i,c_i)];
     }
@@ -111,31 +111,24 @@ map : &mut HashMap<(usize,usize,usize),i64>
     let a = vec_copy[i];
 
     let mut ans = 0;
-
     match a {
-        b'?' => {
-
-            // behave like . 
+        b'?' => {   
+            // # case
+            ans+=recursive(vec_copy, cons,i+1, g_i, c_i+1,map) + 
+            // . cases
             if c_i == 0 {
-                ans +=recursive(vec_copy,cons, i+1, g_i, c_i,map);
-             }
-             // okay we counted something, make sure we consume the group
-             else if c_i == cons[g_i] {
-
-                 ans +=recursive(vec_copy, cons, i+1, g_i+1, 0,map);
-             }
-             else {
-                 ans+= 0;
-             }
-            
-
-            ans+=recursive(vec_copy, cons,i+1, g_i, c_i+1,map);
-
-
+                recursive(vec_copy,cons, i+1, g_i, c_i,map)
+            }
+            else if c_i == cons[g_i] {
+                recursive(vec_copy, cons, i+1, g_i+1, 0,map)
+            }
+            else {
+                0
+            }
+            ;
         }
         b'#' => {   
-
-            ans+=recursive(vec_copy, cons,i+1, g_i, c_i+1,map) ;
+            ans+=recursive(vec_copy, cons,i+1, g_i, c_i+1,map);
         }
         b'.' => {
             // empty space keep going
@@ -155,9 +148,8 @@ map : &mut HashMap<(usize,usize,usize),i64>
             ans+= 0;
         }
     }
-
+    // memoize or else it will be too slow
     map.insert((i,g_i,c_i),ans);
-
     ans
     
 }
