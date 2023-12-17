@@ -6,8 +6,8 @@ fn manhattan_distance(a: (i64,i64), b: (i64,i64)) -> i64 {
 
 
 pub fn solve(){
-    let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/day11.txt";
-    // let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/tests/test_day11.txt";
+    // let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/day11.txt";
+    let file_path = "/Users/thrypuro/Desktop/project/advent-of-code/aoc-2023/inputs/tests/test_day11.txt";
     let lines = read_lines(file_path);
     
     let mut extra_rows : Vec<i64> = Vec::new();
