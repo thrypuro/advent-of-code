@@ -16,28 +16,27 @@ func part1() {
 		log.Fatal(err)
 	}
 	defer file.Close()
-
 	scan := bufio.NewScanner(file)
-	var sta uint = 50
-	var res = 0
+	var start uint = 50
+	var zeroes = 0
 	for scan.Scan() {
 		line := scan.Text()
-		var pr uint = 1
-		var a = len(line)
+		var sym uint = 1
+		var numberLength = len(line)
 		if line[0] == 'L' {
-			pr = 99
+			sym = 99
 		}
-		var nu uint = 0
-		for i := range a - 1 {
-			nu = nu*10 + uint(line[i+1]-'0')
+		var parsedNum uint = 0
+		for i := range numberLength - 1 {
+			parsedNum = parsedNum*10 + uint(line[i+1]-'0')
 		}
-		sta = (sta + pr*nu) % 100
-		if sta == 0 {
-			res += 1
+		start = (start + sym*parsedNum) % 100
+		if start == 0 {
+			zeroes += 1
 		}
 	}
-	println("Ends at zero = ", res)
-	println("Ends at =", sta)
+	println("Ends at zero = ", zeroes)
+	println("Ends at =", start)
 }
 
 func part2() {
@@ -48,40 +47,40 @@ func part2() {
 	defer file.Close()
 
 	scan := bufio.NewScanner(file)
-	var sta int64 = 50
-	var zer int64 = 0
+	var start int64 = 50
+	var zeroes int64 = 0
 
 	for scan.Scan() {
 		line := scan.Text()
-		var pr int64 = 1
+		var sym int64 = 1
 		var a = len(line)
 		if line[0] == 'L' {
-			pr = -1
+			sym = -1
 		}
-		var nu int64 = 0
+		var numberLength int64 = 0
 		for i := range a - 1 {
-			nu = nu*10 + int64(line[i+1]-'0')
+			numberLength = numberLength*10 + int64(line[i+1]-'0')
 		}
-		var roa = pr * nu
-		var sta1 = sta + roa
-		if sta1 == 0 {
-			zer += 1
+		var offset = sym * numberLength
+		var newStart = start + offset
+		if newStart == 0 {
+			zeroes += 1
 
-		} else if sta1 >= 100 {
-			var sta2 = sta1 / 100
-			zer += sta2
+		} else if newStart >= 100 {
+			var localZero = newStart / 100
+			zeroes += localZero
 
-		} else if sta1 < 0 {
-			var sta2 = (-sta1 + 100) / 100
-			zer += sta2
-			if sta == 0 {
-				zer -= 1
+		} else if newStart < 0 {
+			var localZero = (-newStart + 100) / 100
+			zeroes += localZero
+			if start == 0 {
+				zeroes -= 1
 			}
 		}
-		sta = mod(sta1, 100)
+		start = mod(newStart, 100)
 	}
-	println("Ends at zero = ", zer)
-	println("Ends at =", sta)
+	println("Ends at zero = ", zeroes)
+	println("Ends at =", start)
 }
 
 func main() {
